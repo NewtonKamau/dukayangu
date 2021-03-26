@@ -1,11 +1,18 @@
+import { Container } from "react-bootstrap";
+import Header from './components/Header';
+import Footer from './components/Footer'
 
 const App = ()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-      <h1>Duka Yangu Online</h1>
-      </header>
-    </div>
+    <>
+      <Header />
+      <main className="py-3">
+        <Container>
+          <h1>Welcome to duka yangu</h1>
+        </Container>
+      </main>
+      <Footer />
+    </>
   );
 }
 
