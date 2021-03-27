@@ -1,8 +1,12 @@
-const Ratings = ({ value, text }) => {
+import PropTypes from 'prop-types'
+
+
+const Ratings = ({ value, text, color }) => {
   return (
     <div className="rating">
       <span>
         <i
+          style={{ color }}
           className={
             value >= 1
               ? "fas fa-star"
@@ -13,6 +17,7 @@ const Ratings = ({ value, text }) => {
       </span>
       <span>
         <i
+          style={{ color }}
           className={
             value >= 2
               ? "fas fa-star"
@@ -23,6 +28,7 @@ const Ratings = ({ value, text }) => {
       </span>
       <span>
         <i
+          style={{ color }}
           className={
             value >= 3
               ? "fas fa-star"
@@ -33,6 +39,7 @@ const Ratings = ({ value, text }) => {
       </span>
       <span>
         <i
+          style={{ color }}
           className={
             value >= 4
               ? "fas fa-star"
@@ -43,18 +50,26 @@ const Ratings = ({ value, text }) => {
       </span>
       <span>
         <i
+          style={{ color }}
           className={
             value >= 5
               ? "fas fa-star"
               : (value) =>
                   4.5 ? "fas fa-star-half-alt" : (value = '"fas fa-star"')
           }
-              ></i>
-             
-          </span>
-          <span>{text && text}</span>
+        ></i>
+      </span>
+      <span>{text && text}</span>
     </div>
   );
 };
+Ratings.defaultProps = {
+  color:'#f8e825'
+}
 
+Ratings.prototype = {
+  value: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  color:PropTypes.string, 
+}
 export default Ratings;
