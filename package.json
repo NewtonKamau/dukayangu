@@ -1,0 +1,22 @@
+{
+  "name": "duka-yangu",
+  "version": "1.0.0",
+  "description": "The best swahili online shop ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "keywords": [
+    "shop",
+    "js",
+    "react",
+    "ecommerce",
+    "MERN "
+  ],
+  "author": "NewtonKamau",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.2"
+  }
+}
