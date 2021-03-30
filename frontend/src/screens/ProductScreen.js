@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios"
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "../components/Ratings";
-import products from "../products";
 const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
+ const [product, setProduct] = useState([]);
+ useEffect(() => {
+   //fetch data from the api using axios in asychronous manner
+   const fetchProduct = async () => {
+     const { data } = axios.get(`api/product/${match.params.id}`);
+     //set our products to show other than an empty array[]
+     setProduct(data);
+   };
+   fetchProduct();
+ }, []);
   return (
     <>
       <h1>Product</h1>
