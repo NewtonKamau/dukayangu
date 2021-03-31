@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import axios from "axios"
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "../components/Ratings";
+
+
+
 const ProductScreen = ({ match }) => {
- const [product, setProduct] = useState([]);
+
+ const [product, setProduct] = useState({});
  useEffect(() => {
    //fetch data from the api using axios in asychronous manner
    const fetchProduct = async () => {
-     const { data } = axios.get(`api/product/${match.params.id}`);
+     const { data } = await axios.get(`/api/products/${match.params.id}`);
      //set our products to show other than an empty array[]
+     console.log(data);
      setProduct(data);
    };
    fetchProduct();
