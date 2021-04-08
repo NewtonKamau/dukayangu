@@ -8,7 +8,6 @@
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \" npm run server \" \" npm run client \" "
-    
   },
   "keywords": [
     "shop",
@@ -20,6 +19,7 @@
   "author": "NewtonKamau",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.2"
   },
