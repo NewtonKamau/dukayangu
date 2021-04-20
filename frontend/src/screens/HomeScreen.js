@@ -11,7 +11,6 @@ const HomeScreen = () => {
     const fetchProducts = async () => {
       const { data } = await axios.get("/api/products");
       //set our products to show other than an empty array[]
-            console.log(data);
       setProducts(data);
     };
     fetchProducts();
