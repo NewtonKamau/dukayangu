@@ -3,6 +3,9 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
 } from "../constants/productsContstants";
 
 export const listProducts = () => async (dispatch) =>{
@@ -23,3 +26,26 @@ export const listProducts = () => async (dispatch) =>{
   })
 }
 }
+
+
+export const listProductDetails = (id) => async (dispatch) => {
+  try {
+    //make request
+    dispatch({ type: PRODUCT_DETAILS_REQUEST });
+    //import data using axios
+    const { data } = await axios.get(`/api/products/${id}`);
+    //disptach products
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
