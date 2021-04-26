@@ -5,8 +5,7 @@ import {listProducts} from '../actions/productionActions';
 import Product from "../components/Product"
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { Last } from "react-bootstrap/esm/PageItem";
-//definde dispatch 
+//define dispatch 
 const HomeScreen = () => {
   const dispatch = useDispatch();
 //bring in products from the store 
