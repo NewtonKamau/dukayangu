@@ -8,32 +8,63 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { loading } from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
-import CheckoutSteps from "../components/CheckoutSteps";
+import Loader from "../components/Loader";
 
-const PlaceOrderScreen = () => {
+import CheckoutSteps from "../components/CheckoutSteps";
+import {createOrder} from "../actions/orderActions";
+
+const PlaceOrderScreen = (history) => {
+  const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.cart);
-  //calculate price
+  
+  //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
+
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
-  cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)));
-  cart.totalPrice =
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+  cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
-    Number(cart.taxPrice).toFixed(2);
+    Number(cart.taxPrice)
+  ).toFixed(2);
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const {loading, order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+    }
+
+    // eslint-disable-next-line
+  }, [history, success]);
   const placeOrderHandler = () => {
-    console.log("Your order has been received and is being processed");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        paymentMethod: cart.paymentMethod,
+        shippingAddress: cart.shippingAddress,
+        shippingPrice: cart.shippingPrice,
+        itemsPrice: cart.itemsPrice,
+        taxPrice: cart.itemsPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
+      {loading  && <Loader />}
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
@@ -59,19 +90,28 @@ const PlaceOrderScreen = () => {
                 <Message>Your cart is empty</Message>
               ) : (
                 <ListGroup variant="flush">
-                  {cart.cartItems.map((item, index) => {
+                  {cart.cartItems.map((item, index) => (
                     <ListGroupItem key={index}>
-                      <Col md={1}>
-                        <Image src={item.image} alt={item.name} fluid rounded />
-                      </Col>
-                      <Col>
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
-                      </Col>
-                      <Col md={4}>
-                        {item.qty} * ${item.price} = ${item.qty * item.price}
-                      </Col>
-                    </ListGroupItem>;
-                  })}
+                      <Row>
+                        <Col md={1}>
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fluid
+                            rounded
+                          />
+                        </Col>
+                        <Col>
+                          <Link to={`/product/${item.product}`}>
+                            {item.name}
+                          </Link>
+                        </Col>
+                        <Col md={4}>
+                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  ))}
                 </ListGroup>
               )}
             </ListGroupItem>
@@ -106,6 +146,9 @@ const PlaceOrderScreen = () => {
                   <Col>Total</Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroupItem>
+              <ListGroupItem>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroupItem>
               <ListGroupItem>
                 <Button

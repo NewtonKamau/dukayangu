@@ -3,7 +3,9 @@ import dotenv from "dotenv"
 import connectDB from './config/db.js'
 import {notFound,errorHandler} from "./middleware/errorMiddleWare.js";
 import productRoutes from "./routes/productRoutes.js"
+import orderRoutes from "./routes/orderRoute.js";
 import userRoutes from "./routes/userRoutes.js";
+
 
 
 dotenv.config();
@@ -12,7 +14,8 @@ connectDB()
 app.use(express.json())
 app.use("/api/products",productRoutes); 
 app.use("/api/users", userRoutes); 
-
+app.use("/api/orders", orderRoutes);
+ 
 app.get("/api/products", (req, res) => {
     res.json(products)
 });
