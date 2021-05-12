@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, FormControl,Col } from "react-bootstrap";
+import { Form, Button,Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { savePaymentMethod } from "../actions/cartActions";
@@ -47,7 +47,6 @@ const PaymentScreen = ({ history }) => {
               id="Mpesa"
               name="paymentMethod"
               value="Mpesa"
-              checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Form.Group>

@@ -17,7 +17,7 @@ import Loader from "../components/Loader";
 import CheckoutSteps from "../components/CheckoutSteps";
 import {createOrder} from "../actions/orderActions";
 
-const PlaceOrderScreen = (history) => {
+const PlaceOrderScreen = ({history}) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
@@ -38,7 +38,7 @@ const PlaceOrderScreen = (history) => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-  const orderCreate = useSelector((state) => state.orderCreate);
+  const orderCreate = useSelector(state => state.orderCreate);
   const {loading, order, success, error } = orderCreate;
 
   useEffect(() => {
