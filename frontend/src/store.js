@@ -6,7 +6,7 @@ import {
   productDetailsReducer,
 } from "./reducers/productsReducers";
 import { cartReducer } from './reducers/cartReducers';
-import {userLoginReducer,userRegisterReducer,userDetailsReducer,userUpdateProfileReducer} from './reducers/userReducers';
+import {userLoginReducer,userRegisterReducer,userDetailsReducer,userUpdateProfileReducer,userListReducer} from './reducers/userReducers';
 import {orderCreateReducer,orderDetailsReducer,orderPayReducer,orderListMyReducer} from './reducers/orderReducers';
 
 const reducer = combineReducers({
@@ -20,7 +20,8 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
-  orderListMy:orderListMyReducer,
+  orderListMy: orderListMyReducer,
+  userList:userListReducer,
 });
 
 //set cart items from local storage
