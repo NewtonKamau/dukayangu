@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT,USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL } from '../constants/userConstants';
+import {
+  USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL,USER_DETAILS_RESET
+} from '../constants/userConstants';
+import {ORDER_LIST_MY_RESET} from "../constants/orderConstants";
 
 export const login = (email, password) => async (dispatch)=> {
     try {
@@ -27,7 +32,9 @@ export const login = (email, password) => async (dispatch)=> {
 
 export const logout = () => (dispatch)=> {
     localStorage.removeItem("userInfo");
-    dispatch({type:USER_LOGOUT})
+  dispatch({ type: USER_LOGOUT })
+  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({type:ORDER_LIST_MY_RESET})
 }
 
 export const register = (name,email, password) => async (dispatch)=> {
@@ -68,7 +75,7 @@ export const getUserDetails = (id) => async (dispatch,getState) => {
       const {userLogin : {userInfo}} = getState()
     const config = {
       Headers: {
-            "content-type": "application/json",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${userInfo.token}`
       },
     };
@@ -105,7 +112,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     } = getState();
     const config = {
       Headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
