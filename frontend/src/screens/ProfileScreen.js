@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,8 +23,8 @@ const ProfileScreen = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const updateUserProfile = useSelector((state) => state.updateUserProfile);
-  const { success } = updateUserProfile;
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
@@ -38,7 +38,6 @@ const ProfileScreen = ({ location, history }) => {
         dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
       } else {
-        
         setName(user.name);
         setEmail(user.email);
       }
