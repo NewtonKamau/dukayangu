@@ -35,9 +35,56 @@ const deleteProduct= asyncHandler(async (req, res) => {
    throw new Error("Not Found");
  }
 });
+//@desc create product by
+//route  POST /api/products/
+//access private admin only 
+const createProduct= asyncHandler(async (req, res) => {
+ const product = new Product({
+  name:"Dell Laptop",
+  price:100,
+  user:req.user._id,
+  image:"./images.laptop.jpg",
+  brand:"Dell",
+  category:"laptop"
+  countInStock:3,
+  numReviews:2,
+  description:"A new 10th gen laptop with great specs"
+
+ })
+ const createdProduct = await product.save()
+ res.status(201).json(createdProduct)
+
+
+});
+//@desc update a product
+//route  PUT /api/products/id}
+//access private admin only 
+const updateProduct= asyncHandler(async (req, res) => {
+ const {name,price,description,image,brand,category,countInStock} = req.body
+ const product = await Product.findById(req.params.id)
+ if (product) {
+  product.name = name
+  product.price = price
+  product.description = description
+  product.image = image
+  product.brand = brand
+  product.category = category
+  product.countInStock = countInStock
+ const updatedProduct = await product.save()
+ res.status(201).json(updatedProduct)
+ }else{
+  res.status(404)
+  throw new Error("Product not found")
+ }
+
+
+
+});
 
 export {
     getProducts,
   getProductById,
-    deleteProduct
+    deleteProduct,
+    createProduct,
+    updateProduct
 }
