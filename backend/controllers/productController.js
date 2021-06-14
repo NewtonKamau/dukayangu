@@ -45,7 +45,7 @@ const createProduct= asyncHandler(async (req, res) => {
   user:req.user._id,
   image:"./images.laptop.jpg",
   brand:"Dell",
-  category:"laptop"
+  category:"laptop",
   countInStock:3,
   numReviews:2,
   description:"A new 10th gen laptop with great specs"
