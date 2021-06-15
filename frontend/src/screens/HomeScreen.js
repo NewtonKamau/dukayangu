@@ -5,15 +5,22 @@ import {listProducts} from '../actions/productionActions';
 import Product from "../components/Product"
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import ProductCarousel from '../components/ProductCarousel';
 import Paginate from '../components/Paginate';
 const HomeScreen = ( {match }) => {
+
   const keyword = match.params.keyword
+
   const pageNumber = match.params.pageNumber || 1
+
   const dispatch = useDispatch();
+
 //bring in products from the store 
   const productList = useSelector(state => state.productList)
+
   //pull loading, error and products from the state
   const {loading, error,products,page,pages } = productList
+
   useEffect(() => {
    //use dispatch to get the products instead of axios
     dispatch(listProducts(keyword,pageNumber))
@@ -22,7 +29,7 @@ const HomeScreen = ( {match }) => {
   return (
     <>
       <h1>Latest Products</h1>
-      
+      { !keyword && <ProductCarousel /> }
       {loading ? (<Loader />) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
