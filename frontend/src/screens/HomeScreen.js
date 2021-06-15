@@ -5,17 +5,19 @@ import {listProducts} from '../actions/productionActions';
 import Product from "../components/Product"
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Paginate from '../components/Paginate';
 const HomeScreen = ( {match }) => {
   const keyword = match.params.keyword
+  const pageNumber = match.params.pageNumber || 1
   const dispatch = useDispatch();
 //bring in products from the store 
   const productList = useSelector(state => state.productList)
   //pull loading, error and products from the state
-  const {loading, error,products } = productList
+  const {loading, error,products,page,pages } = productList
   useEffect(() => {
    //use dispatch to get the products instead of axios
-    dispatch(listProducts(keyword))
-  }, [dispatch,keyword])
+    dispatch(listProducts(keyword,pageNumber))
+  }, [dispatch,keyword,pageNumber])
   
   return (
     <>
@@ -24,6 +26,7 @@ const HomeScreen = ( {match }) => {
       {loading ? (<Loader />) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
+      <>
          <Row>
         {products.map((product) => (
           <Col sm={12} md={6} lg={4} xl={3}>
@@ -31,6 +34,8 @@ const HomeScreen = ( {match }) => {
           </Col>
         ))}
       </Row> 
+      <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""}/>
+      </>
       )}
       
     </>
