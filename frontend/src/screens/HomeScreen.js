@@ -22,7 +22,6 @@ const HomeScreen = ( {match }) => {
   const {loading, error,products,page,pages } = productList
 
   useEffect(() => {
-   //use dispatch to get the products instead of axios
     dispatch(listProducts(keyword,pageNumber))
   }, [dispatch,keyword,pageNumber])
   
