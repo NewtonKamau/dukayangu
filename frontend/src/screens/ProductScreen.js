@@ -138,7 +138,7 @@ const ProductScreen = ({ history,match }) => {
           <h2>Reviews</h2>
           {product.reviews.length === 0 && <Message>No Reviews</Message>}
           <ListGroup varian="flush">
-            {product.reviews.map(review =>(
+            {product.numReviews.map(review =>(
                 <ListGroupItem key={review._id}>
                   <strong>
                     {review.name}
